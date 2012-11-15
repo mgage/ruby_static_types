@@ -1,0 +1,187 @@
+ROOTNODE pos: logic.rb:6
+    BLOCKNODE pos: logic.rb:6
+        NEWLINENODE pos: logic.rb:6
+            LOCALASGNNODE pos: logic.rb:6
+                TRUENODE pos: logic.rb:6
+        NEWLINENODE pos: logic.rb:8
+            LOCALASGNNODE pos: logic.rb:8
+                FALSENODE pos: logic.rb:8
+        NEWLINENODE pos: logic.rb:10
+            LOCALASGNNODE pos: logic.rb:10
+                ORNODE pos: logic.rb:10
+                    LOCALVARNODE pos: logic.rb:10
+                    LOCALVARNODE pos: logic.rb:10
+        NEWLINENODE pos: logic.rb:12
+            LOCALASGNNODE pos: logic.rb:12
+                ANDNODE pos: logic.rb:12
+                    LOCALVARNODE pos: logic.rb:12
+                    LOCALVARNODE pos: logic.rb:12
+        NEWLINENODE pos: logic.rb:14
+            LOCALASGNNODE pos: logic.rb:14
+                CALLNODE pos: logic.rb:14
+                    LOCALVARNODE pos: logic.rb:14
+        NEWLINENODE pos: logic.rb:16
+            LOCALASGNNODE pos: logic.rb:16
+                CALLNODE pos: logic.rb:16
+                    LOCALVARNODE pos: logic.rb:16
+        NEWLINENODE pos: logic.rb:18
+            LOCALASGNNODE pos: logic.rb:18
+                ORNODE pos: logic.rb:18
+                    NEWLINENODE pos: logic.rb:18
+                        ORNODE pos: logic.rb:18
+                            LOCALVARNODE pos: logic.rb:18
+                            LOCALVARNODE pos: logic.rb:18
+                    LOCALVARNODE pos: logic.rb:18
+        NEWLINENODE pos: logic.rb:20
+            LOCALASGNNODE pos: logic.rb:20
+                ANDNODE pos: logic.rb:20
+                    NEWLINENODE pos: logic.rb:20
+                        ORNODE pos: logic.rb:20
+                            LOCALVARNODE pos: logic.rb:20
+                            LOCALVARNODE pos: logic.rb:20
+                    LOCALVARNODE pos: logic.rb:20
+        NEWLINENODE pos: logic.rb:22
+            LOCALASGNNODE pos: logic.rb:22
+                ORNODE pos: logic.rb:22
+                    LOCALVARNODE pos: logic.rb:22
+                    NEWLINENODE pos: logic.rb:22
+                        ANDNODE pos: logic.rb:22
+                            LOCALVARNODE pos: logic.rb:22
+                            LOCALVARNODE pos: logic.rb:22
+        NEWLINENODE pos: logic.rb:24
+            LOCALASGNNODE pos: logic.rb:24
+                ANDNODE pos: logic.rb:24
+                    VCALLNODE pos: logic.rb:24
+                    VCALLNODE pos: logic.rb:24
+        NEWLINENODE pos: logic.rb:26
+            LOCALASGNNODE pos: logic.rb:26
+                ORNODE pos: logic.rb:26
+                    VCALLNODE pos: logic.rb:26
+                    VCALLNODE pos: logic.rb:26
+        NEWLINENODE pos: logic.rb:29
+            LOCALASGNNODE pos: logic.rb:29
+                CALLNODE pos: logic.rb:29
+                    VCALLNODE pos: logic.rb:29
+        NEWLINENODE pos: logic.rb:31
+            LOCALASGNNODE pos: logic.rb:31
+                CALLNODE pos: logic.rb:31
+                    LOCALVARNODE pos: logic.rb:31
+        NEWLINENODE pos: logic.rb:35
+            ORNODE pos: logic.rb:35
+                VCALLNODE pos: logic.rb:35
+                VCALLNODE pos: logic.rb:35
+        NEWLINENODE pos: logic.rb:37
+            LOCALASGNNODE pos: logic.rb:37
+                FIXNUMNODE pos: logic.rb:37
+        NEWLINENODE pos: logic.rb:39
+            LOCALASGNNODE pos: logic.rb:39
+                CALLNODE pos: logic.rb:39
+                    LOCALVARNODE pos: logic.rb:39
+        NEWLINENODE pos: logic.rb:40
+            LOCALASGNNODE pos: logic.rb:40
+                CALLNODE pos: logic.rb:40
+                    VCALLNODE pos: logic.rb:40
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+LOCALVARNODE
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+AND node
+LOCALVARNODE
+(LocalVarNode:a 11)var name =a
+(LocalVarNode:b 11)var name =b
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+NOT node
+(CallNoArgNode:! 13, (LocalVarNode:a 13))
+argsNode (LocalVarNode:a 13)
+before merge type isBOOL
+after merge type isBOOL
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+NOT node
+(CallNoArgNode:! 15, (LocalVarNode:b 15))
+argsNode (LocalVarNode:b 15)
+before merge type isBOOL
+after merge type isBOOL
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+LOCALVARNODE
+NEWLINENODE
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+LOCALVARNODE
+AND node
+NEWLINENODE
+(LocalVarNode:c 19)var name =c
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+AND node
+LOCALVARNODE
+(LocalVarNode:b 21)var name =b
+(LocalVarNode:c 21)var name =c
+LOCALVARNODE
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+AND node
+VCALLNODE
+(VCallNode:x 23)var name =x
+(VCallNode:y 23)var name =y
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+VCALLNODE
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+NOT node
+(CallNoArgNode:! 28, (VCallNode:z 28))
+argsNode (VCallNode:z 28)
+before merge type isa4
+after merge type isa4
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+NOT node
+(CallNoArgNode:! 30, (LocalVarNode:a 30))
+argsNode (LocalVarNode:a 30)
+before merge type isBOOL
+after merge type isBOOL
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+VCALLNODE
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: INT
+NOT node
+(CallNoArgNode:! 38, (LocalVarNode:b 38))
+argsNode (LocalVarNode:b 38)
+before merge type isBOOL
+after merge type isBOOL
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+NOT node
+(CallNoArgNode:! 39, (VCallNode:z 39))
+argsNode (VCallNode:z 39)
+before merge type isBOOL
+after merge type isBOOL
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+f : BOOL
+g : BOOL
+d : BOOL
+e : BOOL
+b : BOOL
+c : BOOL
+a : POLY
+o : BOOL
+l : BOOL
+m : BOOL
+k : BOOL
+h : BOOL
+i : BOOL
+w : BOOL
+u : BOOL
+p : BOOL
+z : BOOL
+y : BOOL
+x : BOOL

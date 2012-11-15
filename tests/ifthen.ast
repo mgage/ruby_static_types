@@ -1,0 +1,46 @@
+ROOTNODE pos: ifthen.rb:6
+    BLOCKNODE pos: ifthen.rb:6
+        NEWLINENODE pos: ifthen.rb:6
+            LOCALASGNNODE pos: ifthen.rb:6
+                FIXNUMNODE pos: ifthen.rb:6
+        NEWLINENODE pos: ifthen.rb:8
+            LOCALASGNNODE pos: ifthen.rb:8
+                FIXNUMNODE pos: ifthen.rb:8
+        NEWLINENODE pos: ifthen.rb:10
+            LOCALASGNNODE pos: ifthen.rb:10
+                TRUENODE pos: ifthen.rb:10
+        NEWLINENODE pos: ifthen.rb:11
+            LOCALASGNNODE pos: ifthen.rb:11
+                FALSENODE pos: ifthen.rb:11
+        NEWLINENODE pos: ifthen.rb:13
+            LOCALASGNNODE pos: ifthen.rb:13
+                IFNODE pos: ifthen.rb:13
+                    NEWLINENODE pos: ifthen.rb:13
+                        TRUENODE pos: ifthen.rb:13
+                    NEWLINENODE pos: ifthen.rb:14
+                        LOCALASGNNODE pos: ifthen.rb:14
+                            LOCALVARNODE pos: ifthen.rb:14
+                    NEWLINENODE pos: ifthen.rb:16
+                        LOCALASGNNODE pos: ifthen.rb:16
+                            FIXNUMNODE pos: ifthen.rb:16
+LocalAsgnNode
+LHS: INT  RHS: INT
+LocalAsgnNode
+LHS: INT  RHS: INT
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+LocalAsgnNode
+LHS: INT  RHS: INT
+LocalAsgnNode
+LHS: INT  RHS: INT
+LocalAsgnNode
+LHS: INT  RHS: INT
+f : BOOL
+d : INT
+t : BOOL
+b : INT
+c : INT
+a : INT
+z : INT

@@ -1,0 +1,26 @@
+ROOTNODE pos: assignment.rb:5
+    BLOCKNODE pos: assignment.rb:5
+        NEWLINENODE pos: assignment.rb:5
+            LOCALASGNNODE pos: assignment.rb:5
+                FIXNUMNODE pos: assignment.rb:5
+        NEWLINENODE pos: assignment.rb:7
+            LOCALASGNNODE pos: assignment.rb:7
+                TRUENODE pos: assignment.rb:7
+        NEWLINENODE pos: assignment.rb:9
+            LOCALASGNNODE pos: assignment.rb:9
+                LOCALVARNODE pos: assignment.rb:9
+        NEWLINENODE pos: assignment.rb:11
+            LOCALASGNNODE pos: assignment.rb:11
+                LOCALVARNODE pos: assignment.rb:11
+LocalAsgnNode
+LHS: INT  RHS: INT
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+LocalAsgnNode
+LHS: INT  RHS: INT
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: BOOL
+b : BOOL
+c : POLY
+a : POLY

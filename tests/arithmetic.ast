@@ -1,0 +1,307 @@
+ROOTNODE pos: arithmetic.rb:5
+    BLOCKNODE pos: arithmetic.rb:5
+        NEWLINENODE pos: arithmetic.rb:5
+            LOCALASGNNODE pos: arithmetic.rb:5
+                FIXNUMNODE pos: arithmetic.rb:5
+        NEWLINENODE pos: arithmetic.rb:7
+            LOCALASGNNODE pos: arithmetic.rb:7
+                FIXNUMNODE pos: arithmetic.rb:7
+        NEWLINENODE pos: arithmetic.rb:9
+            LOCALASGNNODE pos: arithmetic.rb:9
+                CALLNODE pos: arithmetic.rb:9
+                    LOCALVARNODE pos: arithmetic.rb:9
+                    ARRAYNODE pos: arithmetic.rb:9
+                        LOCALVARNODE pos: arithmetic.rb:9
+        NEWLINENODE pos: arithmetic.rb:11
+            LOCALASGNNODE pos: arithmetic.rb:11
+                CALLNODE pos: arithmetic.rb:11
+                    LOCALVARNODE pos: arithmetic.rb:11
+                    ARRAYNODE pos: arithmetic.rb:11
+                        LOCALVARNODE pos: arithmetic.rb:11
+        NEWLINENODE pos: arithmetic.rb:13
+            LOCALASGNNODE pos: arithmetic.rb:13
+                CALLNODE pos: arithmetic.rb:13
+                    LOCALVARNODE pos: arithmetic.rb:13
+                    ARRAYNODE pos: arithmetic.rb:13
+                        LOCALVARNODE pos: arithmetic.rb:13
+        NEWLINENODE pos: arithmetic.rb:15
+            LOCALASGNNODE pos: arithmetic.rb:15
+                CALLNODE pos: arithmetic.rb:15
+                    LOCALVARNODE pos: arithmetic.rb:15
+                    ARRAYNODE pos: arithmetic.rb:15
+                        LOCALVARNODE pos: arithmetic.rb:15
+        NEWLINENODE pos: arithmetic.rb:17
+            LOCALASGNNODE pos: arithmetic.rb:17
+                CALLNODE pos: arithmetic.rb:17
+                    FIXNUMNODE pos: arithmetic.rb:17
+                    ARRAYNODE pos: arithmetic.rb:17
+                        LOCALVARNODE pos: arithmetic.rb:17
+        NEWLINENODE pos: arithmetic.rb:19
+            LOCALASGNNODE pos: arithmetic.rb:19
+                CALLNODE pos: arithmetic.rb:19
+                    LOCALVARNODE pos: arithmetic.rb:19
+                    ARRAYNODE pos: arithmetic.rb:19
+                        FIXNUMNODE pos: arithmetic.rb:19
+        NEWLINENODE pos: arithmetic.rb:21
+            LOCALASGNNODE pos: arithmetic.rb:21
+                CALLNODE pos: arithmetic.rb:21
+                    LOCALVARNODE pos: arithmetic.rb:21
+                    ARRAYNODE pos: arithmetic.rb:21
+                        FIXNUMNODE pos: arithmetic.rb:21
+        NEWLINENODE pos: arithmetic.rb:23
+            LOCALASGNNODE pos: arithmetic.rb:23
+                CALLNODE pos: arithmetic.rb:23
+                    FIXNUMNODE pos: arithmetic.rb:23
+                    ARRAYNODE pos: arithmetic.rb:23
+                        LOCALVARNODE pos: arithmetic.rb:23
+        NEWLINENODE pos: arithmetic.rb:25
+            LOCALASGNNODE pos: arithmetic.rb:25
+                CALLNODE pos: arithmetic.rb:25
+                    FIXNUMNODE pos: arithmetic.rb:25
+                    ARRAYNODE pos: arithmetic.rb:25
+                        FIXNUMNODE pos: arithmetic.rb:25
+        NEWLINENODE pos: arithmetic.rb:27
+            LOCALASGNNODE pos: arithmetic.rb:27
+                CALLNODE pos: arithmetic.rb:27
+                    FIXNUMNODE pos: arithmetic.rb:27
+                    ARRAYNODE pos: arithmetic.rb:27
+                        FIXNUMNODE pos: arithmetic.rb:27
+        NEWLINENODE pos: arithmetic.rb:29
+            LOCALASGNNODE pos: arithmetic.rb:29
+                CALLNODE pos: arithmetic.rb:29
+                    FIXNUMNODE pos: arithmetic.rb:29
+                    ARRAYNODE pos: arithmetic.rb:29
+                        FIXNUMNODE pos: arithmetic.rb:29
+        NEWLINENODE pos: arithmetic.rb:31
+            LOCALASGNNODE pos: arithmetic.rb:31
+                CALLNODE pos: arithmetic.rb:31
+                    NEWLINENODE pos: arithmetic.rb:31
+                        CALLNODE pos: arithmetic.rb:31
+                            FIXNUMNODE pos: arithmetic.rb:31
+                            ARRAYNODE pos: arithmetic.rb:31
+                                FIXNUMNODE pos: arithmetic.rb:31
+                    ARRAYNODE pos: arithmetic.rb:31
+                        LOCALVARNODE pos: arithmetic.rb:31
+        NEWLINENODE pos: arithmetic.rb:33
+            LOCALASGNNODE pos: arithmetic.rb:33
+                CALLNODE pos: arithmetic.rb:33
+                    NEWLINENODE pos: arithmetic.rb:33
+                        CALLNODE pos: arithmetic.rb:33
+                            FIXNUMNODE pos: arithmetic.rb:33
+                            ARRAYNODE pos: arithmetic.rb:33
+                                FIXNUMNODE pos: arithmetic.rb:33
+                    ARRAYNODE pos: arithmetic.rb:33
+                        LOCALVARNODE pos: arithmetic.rb:33
+        NEWLINENODE pos: arithmetic.rb:35
+            LOCALASGNNODE pos: arithmetic.rb:35
+                CALLNODE pos: arithmetic.rb:35
+                    CALLNODE pos: arithmetic.rb:35
+                        FIXNUMNODE pos: arithmetic.rb:35
+                        ARRAYNODE pos: arithmetic.rb:35
+                            FIXNUMNODE pos: arithmetic.rb:35
+                    ARRAYNODE pos: arithmetic.rb:35
+                        LOCALVARNODE pos: arithmetic.rb:35
+        NEWLINENODE pos: arithmetic.rb:37
+            LOCALASGNNODE pos: arithmetic.rb:37
+                CALLNODE pos: arithmetic.rb:37
+                    FIXNUMNODE pos: arithmetic.rb:37
+                    ARRAYNODE pos: arithmetic.rb:37
+                        NEWLINENODE pos: arithmetic.rb:37
+                            CALLNODE pos: arithmetic.rb:37
+                                FIXNUMNODE pos: arithmetic.rb:37
+                                ARRAYNODE pos: arithmetic.rb:37
+                                    LOCALVARNODE pos: arithmetic.rb:37
+        NEWLINENODE pos: arithmetic.rb:39
+            LOCALASGNNODE pos: arithmetic.rb:39
+                CALLNODE pos: arithmetic.rb:39
+                    FIXNUMNODE pos: arithmetic.rb:39
+                    ARRAYNODE pos: arithmetic.rb:39
+                        FIXNUMNODE pos: arithmetic.rb:39
+        NEWLINENODE pos: arithmetic.rb:41
+            LOCALASGNNODE pos: arithmetic.rb:41
+                CALLNODE pos: arithmetic.rb:41
+                    VCALLNODE pos: arithmetic.rb:41
+                    ARRAYNODE pos: arithmetic.rb:41
+                        VCALLNODE pos: arithmetic.rb:41
+LocalAsgnNode
+LHS: INT  RHS: INT
+LocalAsgnNode
+LHS: INT  RHS: INT
+first (LocalVarNode:a 8) second (LocalVarNode:b 8)
+inside second[]
+left INT
+right INT
+type conflict
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: POLY
+first (LocalVarNode:a 10) second (LocalVarNode:b 10)
+inside second[]
+left INT
+right INT
+type conflict
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: POLY
+first (LocalVarNode:a 12) second (LocalVarNode:b 12)
+inside second[]
+left INT
+right INT
+type conflict
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: POLY
+first (LocalVarNode:a 14) second (LocalVarNode:b 14)
+inside second[]
+left INT
+right INT
+type conflict
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: POLY
+first (FixnumNode 16) second (LocalVarNode:a 16)
+inside second[]
+left INT
+right INT
+type conflict
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: POLY
+first (LocalVarNode:a 18) second (FixnumNode 18)
+inside second[]
+left INT
+right INT
+type conflict
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: POLY
+first (LocalVarNode:a 20) second (FixnumNode 20)
+inside second[]
+left INT
+right INT
+type conflict
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: POLY
+first (FixnumNode 22) second (LocalVarNode:a 22)
+inside second[]
+left INT
+right INT
+type conflict
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: POLY
+first (FixnumNode 24) second (FixnumNode 24)
+inside second[]
+left INT
+right INT
+type conflict
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: POLY
+first (FixnumNode 26) second (FixnumNode 26)
+inside second[]
+left INT
+right INT
+type conflict
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: POLY
+first (FixnumNode 28) second (FixnumNode 28)
+inside second[]
+left INT
+right INT
+type conflict
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: POLY
+first (FixnumNode 30) second (FixnumNode 30)
+inside second[]
+left INT
+right INT
+type conflict
+type conflict
+first (NewlineNode 30, (CallOneArgFixnumNode:+ 30, (FixnumNode 30), (ArrayNode 30, (FixnumNode 30)))) second (LocalVarNode:a 30)
+inside second[]
+left POLY
+right INT
+type conflict
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: POLY
+first (FixnumNode 32) second (FixnumNode 32)
+inside second[]
+left INT
+right INT
+type conflict
+type conflict
+first (NewlineNode 32, (CallOneArgFixnumNode:/ 32, (FixnumNode 32), (ArrayNode 32, (FixnumNode 32)))) second (LocalVarNode:a 32)
+inside second[]
+left POLY
+right INT
+type conflict
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: POLY
+first (FixnumNode 34) second (FixnumNode 34)
+inside second[]
+left INT
+right INT
+type conflict
+type conflict
+first (CallOneArgFixnumNode:/ 34, (FixnumNode 34), (ArrayNode 34, (FixnumNode 34))) second (LocalVarNode:a 34)
+inside second[]
+left POLY
+right INT
+type conflict
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: POLY
+first (FixnumNode 36) second (LocalVarNode:a 36)
+inside second[]
+left INT
+right INT
+type conflict
+type conflict
+first (FixnumNode 36) second (NewlineNode 36, (CallOneArgNode:* 36, (FixnumNode 36), (ArrayNode 36, (LocalVarNode:a 36))))
+inside second[(CallOneArgNode:* 36, (FixnumNode 36), (ArrayNode 36, (LocalVarNode:a 36)))]
+left INT
+right POLY
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: POLY
+first (FixnumNode 38) second (FixnumNode 38)
+inside second[]
+left INT
+right INT
+type conflict
+type conflict
+LocalAsgnNode
+LHS: POLY  RHS: POLY
+first (VCallNode:u 40) second (VCallNode:v 40)
+inside second[]
+left a0
+right a1
+LocalAsgnNode
+LHS: BOOL  RHS: BOOL
+f : POLY
+g : POLY
+d : POLY
+e : POLY
+b : INT
+c : POLY
+a : INT
+n : POLY
+o : POLY
+l : POLY
+m : POLY
+j : POLY
+k : POLY
+h : POLY
+i : POLY
+v : a1
+u : a0
+t : BOOL
+s : POLY
+q : POLY
+p : POLY
