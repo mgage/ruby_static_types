@@ -143,6 +143,9 @@ public class NodeTypeVisitor implements NodeVisitor {
         out.println(s + " : " + mVarTypeTable.get(s).toString());
       }
     }
+    public HashMap getNodeTypeTable() {
+    	return mNodeTypeTable; 
+    }
 
     public String visitAliasNode(AliasNode iVisited) {
       return iVisited.getNodeType().toString();
