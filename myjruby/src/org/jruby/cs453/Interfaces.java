@@ -32,6 +32,11 @@ interface IVarTypeTable  {
 	
 	Boolean containsKey(String var);
 	
+	IVarTypeTable getParent();
+	
+	void setParent(IVarTypeTable p);
+	
+	void addBinaryOp(String sym, TypeClass left, TypeClass right,TypeClass retType);
 
 
 }

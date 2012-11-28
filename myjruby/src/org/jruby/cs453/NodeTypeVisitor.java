@@ -1,5 +1,6 @@
 package org.jruby.cs453;
 
+
 import org.jruby.ast.visitor.NodeVisitor;
 
 import org.jruby.ast.Node;
@@ -121,6 +122,9 @@ public class NodeTypeVisitor implements NodeVisitor {
     public NodeTypeVisitor() {
       mNodeTypeTable       = new NodeTypeTable();
       mVarTypeTable        = new VarTypeTable();
+      mBaseSymbolTable     = new VarTypeTable();
+      mVarTypeTable.setParent(mBaseSymbolTable);
+      initializeBaseSymbolTable();
       //mMethodTypeSpecTable = new HashMap<String, TypeClass>();
       //mPendingNodeList     = new ArrayList<Node>();
     }
@@ -138,9 +142,60 @@ public class NodeTypeVisitor implements NodeVisitor {
       mPendingNodeList.add(node);
     }
 */
+    private void initializeBaseSymbolTable() {
+    	// + binary operator
+        // TypeClass plus = new TypeClass(TypeTrait.FUNC);
+//         ArrayList<TypeClass>  args = new ArrayList<TypeClass>();
+//         args.add(new TypeClass(TypeTrait.INT) );
+//         args.add(new TypeClass(TypeTrait.INT) );
+//         plus.setFuncType(args, new TypeClass(TypeTrait.INT) );
+//         mBaseSymbolTable.put("+",plus);
+        mBaseSymbolTable.addBinaryOp("+", 
+         new TypeClass(TypeTrait.INT), 
+         new TypeClass(TypeTrait.INT), 
+         new TypeClass(TypeTrait.INT) );
+        mBaseSymbolTable.addBinaryOp("-", 
+         new TypeClass(TypeTrait.INT), 
+         new TypeClass(TypeTrait.INT), 
+         new TypeClass(TypeTrait.INT) );
+        mBaseSymbolTable.addBinaryOp("*", 
+         new TypeClass(TypeTrait.INT), 
+         new TypeClass(TypeTrait.INT), 
+         new TypeClass(TypeTrait.INT) );
+        mBaseSymbolTable.addBinaryOp("/", 
+         new TypeClass(TypeTrait.INT), 
+         new TypeClass(TypeTrait.INT), 
+         new TypeClass(TypeTrait.INT) );
+        mBaseSymbolTable.addBinaryOp("<", 
+         new TypeClass(TypeTrait.INT), 
+         new TypeClass(TypeTrait.INT), 
+         new TypeClass(TypeTrait.BOOL) );
+        mBaseSymbolTable.addBinaryOp(">", 
+         new TypeClass(TypeTrait.INT), 
+         new TypeClass(TypeTrait.INT), 
+         new TypeClass(TypeTrait.BOOL) );
+        mBaseSymbolTable.addBinaryOp("<=", 
+         new TypeClass(TypeTrait.INT), 
+         new TypeClass(TypeTrait.INT), 
+         new TypeClass(TypeTrait.BOOL) );
+        mBaseSymbolTable.addBinaryOp(">=", 
+         new TypeClass(TypeTrait.INT), 
+         new TypeClass(TypeTrait.INT), 
+         new TypeClass(TypeTrait.BOOL) );
+        TypeClass ty = new TypeClass();
+        
+        mBaseSymbolTable.addBinaryOp("==", 
+         new TypeClass(ty), // type classes must agree
+         new TypeClass(ty), 
+         new TypeClass(TypeTrait.BOOL) );
+    }
+    
     public void printVarTypeTable(PrintStream out) {
       for (String s : mVarTypeTable.keySet()) {
         out.println(s + " : " + mVarTypeTable.get(s).toString());
+      }
+      for (String s : mBaseSymbolTable.keySet()) {
+        out.println(s + " : " + mBaseSymbolTable.get(s).toString());
       }
     }
     public INodeTypeTable getNodeTypeTable() {
@@ -973,6 +1028,8 @@ public class NodeTypeVisitor implements NodeVisitor {
     private INodeTypeTable   mNodeTypeTable;
     /* mapping each variable to a type */
     private IVarTypeTable mVarTypeTable;
+    /* defines +, -, * , /, ==,    */
+    private IVarTypeTable mBaseSymbolTable; 
     /* maintaining partial method type information */ 
     //private HashMap<String, TypeClass> mMethodTypeSpecTable;
 } 
