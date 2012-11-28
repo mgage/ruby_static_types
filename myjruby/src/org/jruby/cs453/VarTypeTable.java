@@ -9,10 +9,11 @@ import java.util.Set;
 
 public class VarTypeTable implements IVarTypeTable  {
 	
-	private Map<String, TypeClass> mVarTypeTable    = new HashMap<String, TypeClass>();
+	private Map<String, TypeClass> mVarTypeTable;
 	
-
-	
+	public VarTypeTable() {
+		mVarTypeTable    = new HashMap<String, TypeClass>();	
+	}
 	public TypeClass get(String var) {
 		
 		return this.mVarTypeTable.get(var);

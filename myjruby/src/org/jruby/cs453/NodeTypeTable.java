@@ -9,7 +9,11 @@ import java.util.Set;
 
 public class NodeTypeTable implements INodeTypeTable{
 
-	private Map<Node, TypeClass> mNodeTypeTable    = new HashMap<Node, TypeClass> ();
+	private Map<Node, TypeClass> mNodeTypeTable;
+	
+	public NodeTypeTable() {
+		mNodeTypeTable    = new HashMap<Node, TypeClass> ();
+	}
 	
 	public TypeClass get(Node node) {
 		return mNodeTypeTable.get(node);
