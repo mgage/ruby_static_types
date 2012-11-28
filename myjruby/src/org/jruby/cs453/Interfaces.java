@@ -1,14 +1,16 @@
 package org.jruby.cs453;
 
+import java.util.Set;
+
 import org.jruby.ast.Node;
 import org.jruby.ast.NodeType;
 
 
-interface NodeTypeTable  {
+interface INodeTypeTable  {
 
 //
 
-	TypeClass get(Node node, TypeClass guestClass);
+	TypeClass get(Node node);
 
 	TypeClass put(Node node, TypeClass guestClass);
 
@@ -17,15 +19,19 @@ interface NodeTypeTable  {
 
 }
 
-interface VarTypeTable  {
+interface IVarTypeTable  {
 
-//
 
-	TypeClass get(String var, TypeClass guestClass);
+	TypeClass get(String var);
 
 	TypeClass put(String var, TypeClass guestClass);
 
 	TypeClass update(String var, TypeClass guestClass);
+	
+	Set<String> keySet();
+	
+	Boolean containsKey(String var);
+	
 
 
 }

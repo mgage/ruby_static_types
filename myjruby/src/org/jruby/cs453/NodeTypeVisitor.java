@@ -119,8 +119,8 @@ public class NodeTypeVisitor implements NodeVisitor {
 
     // constructor
     public NodeTypeVisitor() {
-      mNodeTypeTable       = new HashMap<Node, TypeClass>();
-      mVarTypeTable        = new HashMap<String, TypeClass>();
+      mNodeTypeTable       = new NodeTypeTable();
+      mVarTypeTable        = new VarTypeTable();
       //mMethodTypeSpecTable = new HashMap<String, TypeClass>();
       //mPendingNodeList     = new ArrayList<Node>();
     }
@@ -143,7 +143,7 @@ public class NodeTypeVisitor implements NodeVisitor {
         out.println(s + " : " + mVarTypeTable.get(s).toString());
       }
     }
-    public HashMap getNodeTypeTable() {
+    public INodeTypeTable getNodeTypeTable() {
     	return mNodeTypeTable; 
     }
 
@@ -300,7 +300,8 @@ public class NodeTypeVisitor implements NodeVisitor {
         }
         return node.getNodeType().toString();
       }
-      // FIXME
+      
+      // Binary commands
       if ( node.getName() == "+" || node.getName() == "-"
         || node.getName() == "*" || node.getName() =="/" ) {
         
@@ -331,9 +332,10 @@ public class NodeTypeVisitor implements NodeVisitor {
         // update node table -- check compatibility of actual type with signature and unify types
         // this action may propagate downward through child nodes and to symbols in the VarTypeTable
             /* ensure arguments are compatible with ints */
+            /* this will also set the types of left and right to int */
             ty_left.mergeTypeClass(left);  
             ty_right.mergeTypeClass(right);
-            /* this should also reset the types of left and right to int */
+            
       
         
         // update var table from node table
@@ -628,10 +630,8 @@ public class NodeTypeVisitor implements NodeVisitor {
       if ( null!=elseNode ) {
         TypeClass elseType = mNodeTypeTable.get(elseNode);
         thenType.mergeTypeClass(elseType);
-        //elseType.mergeTypeClass(thenType);
       }
-      mNodeTypeTable.put(node, thenType);
-           
+      mNodeTypeTable.put(node, thenType);          
       return node.getNodeType().toString();
     }
 
@@ -676,7 +676,8 @@ public class NodeTypeVisitor implements NodeVisitor {
 			// get types of argument nodes
 			   TypeClass  ty_rhs = mNodeTypeTable.get(rhs_node); //type of RHS
 
-			// update node table -- check compatibility of actual type with signature and unify types
+			// update node table -- check compatibility of actual type 
+			// with signature and unify types
 			// update var table from node table
  
 			  if ( !mVarTypeTable.containsKey(node.getName()) ) {   
@@ -969,9 +970,9 @@ public class NodeTypeVisitor implements NodeVisitor {
 
     // private ArrayList<Node> mPendingNodeList;
     /* mapping each node to a type */
-    private HashMap<Node, TypeClass>   mNodeTypeTable;
+    private INodeTypeTable   mNodeTypeTable;
     /* mapping each variable to a type */
-    private HashMap<String, TypeClass> mVarTypeTable;
+    private IVarTypeTable mVarTypeTable;
     /* maintaining partial method type information */ 
     //private HashMap<String, TypeClass> mMethodTypeSpecTable;
 } 

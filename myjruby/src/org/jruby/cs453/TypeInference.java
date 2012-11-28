@@ -39,10 +39,11 @@ public class TypeInference {
   }
   
  public void printTypeInferResult() {
+     // print node table
+    printTree2(mRuntime.getOutputStream(), mTypeVisitor.getNodeTypeTable(), mRoot, 0);
+
     // prints symbol table
     mTypeVisitor.printVarTypeTable(mRuntime.getOutputStream());
-    // print node table
-    printTree2(mRuntime.getOutputStream(), mTypeVisitor.getNodeTypeTable(), mRoot, 0);
   }
 
   private void printTree(PrintStream out, Node node, int depth) {
@@ -55,7 +56,7 @@ public class TypeInference {
       printTree(out, child, depth+1);
     }
   }
-   private void printTree2(PrintStream out, HashMap mNodeTable, Node node, int depth) {
+   private void printTree2(PrintStream out, INodeTypeTable mNodeTable, Node node, int depth) {
     for(int i=0; i<depth;i++) {
       out.print("    ");
     }
