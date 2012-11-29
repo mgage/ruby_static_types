@@ -11,14 +11,19 @@ import java.util.ArrayList;
 public class VarTypeTable implements IVarTypeTable  {
 	
 	private Map<String, TypeClass> mVarTypeTable;
-	private IVarTypeTable parent;
+	private IVarTypeTable parent = null;
 	
 	public VarTypeTable() {
 		mVarTypeTable    = new HashMap<String, TypeClass>();	
 	}
 	public TypeClass get(String var) {
-		
-		return this.mVarTypeTable.get(var);
+		if ( mVarTypeTable.containsKey(var) ) { 
+			return this.mVarTypeTable.get(var);
+		} else if (parent!=null ) {
+			return parent.get(var);
+		} else {
+		    return this.mVarTypeTable.get(var);//FIXME -- currently returns null -- should this throw an error?
+		}
 	}
 
 	public TypeClass put(String var, TypeClass guestClass) {

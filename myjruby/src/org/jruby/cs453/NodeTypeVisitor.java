@@ -182,8 +182,8 @@ public class NodeTypeVisitor implements NodeVisitor {
          new TypeClass(TypeTrait.INT), 
          new TypeClass(TypeTrait.INT), 
          new TypeClass(TypeTrait.BOOL) );
-        TypeClass ty = new TypeClass();
-        
+         
+        TypeClass ty = new TypeClass();        
         mBaseSymbolTable.addBinaryOp("==", 
          new TypeClass(ty), // type classes must agree
          new TypeClass(ty), 
@@ -360,6 +360,7 @@ public class NodeTypeVisitor implements NodeVisitor {
       if ( node.getName() == "+" || node.getName() == "-"
         || node.getName() == "*" || node.getName() =="/" ) {
         
+        System.out.println( "symbol" + node.getName() + " : " + mVarTypeTable.get(node.getName() ) );
         // get argument nodes
         //FIXME -- why won't getArgsNode work???
         List<Node> argNodes = node.childNodes();
