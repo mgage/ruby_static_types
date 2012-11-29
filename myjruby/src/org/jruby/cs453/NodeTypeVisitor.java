@@ -123,7 +123,9 @@ public class NodeTypeVisitor implements NodeVisitor {
       mNodeTypeTable       = new NodeTypeTable();
       mVarTypeTable        = new VarTypeTable();
       mBaseSymbolTable     = new VarTypeTable();
+      
       mVarTypeTable.setParent(mBaseSymbolTable);
+      mNodeTypeTable.setVarTypeTable(mVarTypeTable);
       initializeBaseSymbolTable();
       //mMethodTypeSpecTable = new HashMap<String, TypeClass>();
       //mPendingNodeList     = new ArrayList<Node>();
@@ -360,50 +362,13 @@ public class NodeTypeVisitor implements NodeVisitor {
       if ( node.getName() == "+" || node.getName() == "-"
         || node.getName() == "*" || node.getName() =="/" ) {
         
-        System.out.println( "symbol" + node.getName() + " : " + mVarTypeTable.get(node.getName() ) );
+        //System.out.println( "symbol" + node.getName() + " : " + mVarTypeTable.get(node.getName() ) );
         // get argument nodes
         //FIXME -- why won't getArgsNode work???
         List<Node> argNodes = node.childNodes();
         Node first = argNodes.get(0);  
         Node second =  argNodes.get(1) .childNodes() .get(0);       
-        
-        /*
-        	proposed abstraction:
-        	update_binary_node( receiver_node: node, argument_node1: first, argument_node2: second )
-        */
-        
-        // get types of argument nodes
-        TypeClass left = mNodeTypeTable.get(first);
-           //System.out.println("left " + left);
-        TypeClass right = mNodeTypeTable.get( second );
-           //System.out.println("right " + right);
-        
-        // get data from "type" of operation
-           TypeClass funcType = mVarTypeTable.get(node.getName());
-           TypeClass ty_rcvr = funcType.getRetType();
-           ArrayList<TypeClass> args = funcType.getArgType();
-           TypeClass ty_left  = args.get(0);
-           TypeClass ty_right = args.get(1);
-           
-        // update node table -- check compatibility of actual type with signature and unify types
-        // this action may propagate downward through child nodes and to symbols in the VarTypeTable
-            /* ensure arguments are compatible with ints */
-            /* this will also set the types of left and right to int */
-            ty_left.mergeTypeClass(left);  
-            ty_right.mergeTypeClass(right);
-            
-      
-        // TO DO -- generalize this
-        // update var table from node table
-        // updating a var may cause the nodes that refer to it to be updated.
-        // updating those nodes may cause parent and sibling nodes to be updated.
-        if (first.getNodeType() == NodeType.LOCALVARNODE) { // FIXME other nodes may be involved
-        	mVarTypeTable.put( ( (INameNode)first).getName(), new TypeClass(TypeTrait.INT ));
-        }
-        if (second.getNodeType() == NodeType.LOCALVARNODE) {
-        	mVarTypeTable.put( ( (INameNode)second).getName(), new TypeClass(TypeTrait.INT )); 
-        } 
-        mNodeTypeTable.put(node, ty_rcvr);  // return value is INT
+        mNodeTypeTable.update_binary_node(node,first, second);     
         return node.getNodeType().toString();
       }
       if ( node.getName() == "!" ) {

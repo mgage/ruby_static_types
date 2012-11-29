@@ -5,6 +5,7 @@ import java.util.Set;
 import org.jruby.ast.Node;
 import org.jruby.ast.NodeType;
 
+import org.jruby.ast.CallNode;  // FIXME
 
 interface INodeTypeTable  {
 
@@ -16,7 +17,11 @@ interface INodeTypeTable  {
 
 	TypeClass update(Node node, TypeClass guestClass);
 
-
+    public void update_binary_node( CallNode rcvrNode, Node firstArg, Node secondArg );
+    
+    void setVarTypeTable(IVarTypeTable tbl);
+    
+    IVarTypeTable getVarTypeTable();
 }
 
 interface IVarTypeTable  {
@@ -38,5 +43,6 @@ interface IVarTypeTable  {
 	
 	void addBinaryOp(String sym, TypeClass left, TypeClass right,TypeClass retType);
 
+    
 
 }
