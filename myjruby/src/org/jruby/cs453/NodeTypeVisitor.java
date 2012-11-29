@@ -366,12 +366,10 @@ public class NodeTypeVisitor implements NodeVisitor {
         List<Node> argNodes = node.childNodes();
         Node first = argNodes.get(0);  
         Node second =  argNodes.get(1) .childNodes() .get(0);       
-        //System.out.println("first " + first + " second " + second );
-        //System.out.println("inside second" + ( second.childNodes() ) );
         
         /*
         	proposed abstraction:
-        	update_node( receiver_node: node, argument_node1: first, argument_node2: second )
+        	update_binary_node( receiver_node: node, argument_node1: first, argument_node2: second )
         */
         
         // get types of argument nodes
@@ -379,12 +377,14 @@ public class NodeTypeVisitor implements NodeVisitor {
            //System.out.println("left " + left);
         TypeClass right = mNodeTypeTable.get( second );
            //System.out.println("right " + right);
-        // get data from current node
         
         // get data from "type" of operation
-           TypeClass ty_rcvr = new TypeClass(TypeTrait.INT);
-           TypeClass ty_left = new TypeClass(TypeTrait.INT);
-           TypeClass ty_right = new TypeClass(TypeTrait.INT);
+           TypeClass funcType = mVarTypeTable.get(node.getName());
+           TypeClass ty_rcvr = funcType.getRetType();
+           ArrayList<TypeClass> args = funcType.getArgType();
+           TypeClass ty_left  = args.get(0);
+           TypeClass ty_right = args.get(1);
+           
         // update node table -- check compatibility of actual type with signature and unify types
         // this action may propagate downward through child nodes and to symbols in the VarTypeTable
             /* ensure arguments are compatible with ints */
@@ -393,7 +393,7 @@ public class NodeTypeVisitor implements NodeVisitor {
             ty_right.mergeTypeClass(right);
             
       
-        
+        // TO DO -- generalize this
         // update var table from node table
         // updating a var may cause the nodes that refer to it to be updated.
         // updating those nodes may cause parent and sibling nodes to be updated.
