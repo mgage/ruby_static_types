@@ -83,7 +83,11 @@ public class TypeClass {
         else {
           str = "-";
         }
-        str = str + " => " + mRetType.toString();
+        if (mRetType != null ) {
+            str = str + " => " + mRetType.toString();
+        } else {
+        	str = str + " => ";
+        }
         return "FUNC: " + str;
       case NIL:    return "NIL";
       case POLY:   return "POLY"; /* a method's argument could have more than one type, type ERROR */

@@ -194,7 +194,11 @@ public class NodeTypeVisitor implements NodeVisitor {
     
     public void printVarTypeTable(PrintStream out) {
       for (String s : mVarTypeTable.keySet()) {
-        out.println(s + " : " + mVarTypeTable.get(s).toString());
+        if ( mVarTypeTable.get(s) != null ) {
+        	out.println(s + " : " + mVarTypeTable.get(s).toString());
+        } else {
+        	out.println(s + " : undefined");
+        }
       }
       for (String s : mBaseSymbolTable.keySet()) {
         out.println(s + " : " + mBaseSymbolTable.get(s).toString());
@@ -257,6 +261,7 @@ public class NodeTypeVisitor implements NodeVisitor {
       }
       TypeClass methodType = new TypeClass(TypeTrait.FUNC);
       methodType.setFuncType(argTypeList);
+      methodType.setFuncType(new TypeClass());
       mNodeTypeTable.put(node, methodType);
       return node.getNodeType().toString();
     }
@@ -268,7 +273,7 @@ public class NodeTypeVisitor implements NodeVisitor {
     public String visitArgsPushNode(ArgsPushNode iVisited) {
       return iVisited.getNodeType().toString();
     }
-
+    
     /*
      * a general array, could be an array literal, quoted 
      * words or args
@@ -355,12 +360,17 @@ public class NodeTypeVisitor implements NodeVisitor {
         if (recv.getName() == "Proc" ) {
           mNodeTypeTable.put(node, mNodeTypeTable.get(iter));
         }
+        System.out.println("received 'new' command");
         return node.getNodeType().toString();
       }
       
       // Binary commands
       if ( node.getName() == "+" || node.getName() == "-"
-        || node.getName() == "*" || node.getName() =="/" ) {
+        || node.getName() == "*" || node.getName() =="/" 
+        || node.getName() == "==" || node.getName() == "<="
+        || node.getName() == ">=" || node.getName() == "<"
+        || node.getName() == ">"
+        ) {
         
         //System.out.println( "symbol" + node.getName() + " : " + mVarTypeTable.get(node.getName() ) );
         // get argument nodes
@@ -401,10 +411,9 @@ public class NodeTypeVisitor implements NodeVisitor {
         Node argsNode = node.getArgsNode();
         List<Node> args = argsNode.childNodes();
         ArrayList<TypeClass> argTypeList = new ArrayList<TypeClass>();
-        if(args.size()==0) {
+        if (args.size()==0) {
           argTypeList.add(new TypeClass(TypeTrait.NIL));
-        }
-        else {
+        } else {
           for( Node n : args ) {
             TypeClass argType = mNodeTypeTable.get(n);
             argTypeList.add(argType);
@@ -546,12 +555,13 @@ public class NodeTypeVisitor implements NodeVisitor {
      */
     public String visitFCallNode(FCallNode node) {
       String funcName = node.getName();
-
+      System.out.println( "func name" + funcName );
       Node argsNode = node.getArgsNode();
       ArrayList<TypeClass> argTypeList = new ArrayList<TypeClass>();
       if(argsNode!=null) {
         List<Node> args = argsNode.childNodes();
         for( Node n : args ) {
+          System.out.println("arg is " +n );
           TypeClass argType = mNodeTypeTable.get(n);
           argTypeList.add(argType);
         }
@@ -664,12 +674,12 @@ public class NodeTypeVisitor implements NodeVisitor {
       List<Node> children = node.childNodes();
       ArgsNode args = (ArgsNode)children.get(0);
       Node body = children.get(1);
-
+      System.out.println(" body " + body );
       ArrayList<TypeClass> argTypeList = mNodeTypeTable.get(args).getArgType();
-      TypeClass retType  = mNodeTypeTable.get(body);
+      //TypeClass retType  = mNodeTypeTable.get(body);
+      TypeClass retType = new TypeClass();
       TypeClass funcType = new TypeClass(TypeTrait.FUNC);
       funcType.setFuncType( argTypeList, retType );
- 
       mNodeTypeTable.put(node, funcType);
       return node.getNodeType().toString();
     }
