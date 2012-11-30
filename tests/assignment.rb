@@ -17,8 +17,10 @@ c = b
 i = 5  
 j = true
 
-d = j  # d and j become POLY but not i ??
 d = i
+d = j  # d and j become POLY but not i ??
+d = k
+
 ######################
 
 =begin

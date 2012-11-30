@@ -394,11 +394,12 @@ public class NodeTypeVisitor implements NodeVisitor {
         IterNode   iter = (IterNode)node.getIterNode();
         if (recv.getName() == "Proc" ) {
           mNodeTypeTable.put(node, mNodeTypeTable.get(iter));
+          System.out.println("received 'proc' command");
         }
         System.out.println("received 'new' command");
         return node.getNodeType().toString();
       }
-      
+      System.out.println("call node received command " +node.getName() );
       // Binary commands
       if ( node.getName() == "+" || node.getName() == "-"
         || node.getName() == "*" || node.getName() =="/" 
@@ -413,7 +414,8 @@ public class NodeTypeVisitor implements NodeVisitor {
         List<Node> argNodes = node.childNodes();
         Node first  =  argNodes.get(0);  
         Node second =  argNodes.get(1) .childNodes() .get(0);       
-        mNodeTypeTable.update_binary_node(node,first, second);     
+        mNodeTypeTable.update_binary_node(node,first, second);  
+        //mNodeTypeTable.put(node, mNodeTypeTable.get(iterNode) );   
         return node.getNodeType().toString();
       }
       if ( node.getName() == "!" ) {
@@ -440,9 +442,12 @@ public class NodeTypeVisitor implements NodeVisitor {
 
         return node.getNodeType().toString();
       }
-      if ( node.getName() == "call" ) {
+      if ( node.getName() == "call" || node.getName() == "[]" ) {
         /* TODO Problem here */
+        System.out.println("received 'call' command");
+        System.out.println("node " + node);
         Node recvNode = node.getReceiverNode();
+        System.out.println("rcvr node " + recvNode);
         Node argsNode = node.getArgsNode();
         List<Node> args = argsNode.childNodes();
         ArrayList<TypeClass> argTypeList = new ArrayList<TypeClass>();
@@ -461,8 +466,8 @@ public class NodeTypeVisitor implements NodeVisitor {
         methodType.setFuncType(argTypeList, methodRetType);
 
         TypeClass procEntityType = mNodeTypeTable.get(recvNode);
-        procEntityType.mergeTypeClass(methodType);
-        mNodeTypeTable.put(node, procEntityType.getRetType());
+        //procEntityType.mergeTypeClass(methodType);  //FIXME
+        //mNodeTypeTable.put(node, procEntityType.getRetType());
         return node.getNodeType().toString();
       }
       //INameNode recv = (INameNode)node.getReceiverNode();
@@ -567,25 +572,25 @@ public class NodeTypeVisitor implements NodeVisitor {
      * define a method
      */
     public String visitDefnNode(DefnNode node) {
-      List<Node> children = node.childNodes();
-      ArgsNode args = (ArgsNode)children.get(1);
-      Node body = children.get(2);
-      String funcName = node.getName();
-
-      ArrayList<TypeClass> argTypeList = mNodeTypeTable.get(args).getArgType();
-      TypeClass retType  = mNodeTypeTable.get(body);
-      TypeClass funcType = new TypeClass(TypeTrait.FUNC);
-      funcType.setFuncType( argTypeList, retType );
-      /* check whether we have speculated the method type 
-       * if yes, merge the speculation with newly determined type
-       * otherwise, continue insert into VarTypeTable
-       */
-        
-      if ( mVarTypeTable.containsKey(funcName) ) {
-        funcType.mergeTypeClass(mVarTypeTable.get(funcName));
-      }
-        
-      mVarTypeTable.put( funcName, funcType );
+  //     List<Node> children = node.childNodes();
+//       ArgsNode args = (ArgsNode)children.get(1);
+//       Node body = children.get(2);
+//       String funcName = node.getName();
+// 
+//       ArrayList<TypeClass> argTypeList = mNodeTypeTable.get(args).getArgType();
+//       TypeClass retType  = mNodeTypeTable.get(body);
+//       TypeClass funcType = new TypeClass(TypeTrait.FUNC);
+//       funcType.setFuncType( argTypeList, retType );
+//       /* check whether we have speculated the method type 
+//        * if yes, merge the speculation with newly determined type
+//        * otherwise, continue insert into VarTypeTable
+//        */
+//         
+//       if ( mVarTypeTable.containsKey(funcName) ) {
+//         funcType.mergeTypeClass(mVarTypeTable.get(funcName));
+//       }
+//         
+//       mVarTypeTable.put( funcName, funcType );
       return node.getNodeType().toString();
     }
 

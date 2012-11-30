@@ -2,6 +2,8 @@
 
 # run ../jruby/bin/jruby logic.rb >logic.ast
 # Assignment example
-
-f = Proc{|x,y,z,w| c=x+y; 1}
-c=f[3]
+x=true
+f = Proc{|x,y,z,w|  c=x+y; c}
+d=f.call(3,4,5,true)
+e = f.call(false,true,false,true)
+g = f[true,true,true,true]
