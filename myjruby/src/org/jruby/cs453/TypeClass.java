@@ -75,7 +75,9 @@ public class TypeClass {
       case FUNC:
         String str = "";
         for ( TypeClass t : mArgTypes ) {
-          str =  str + ", " + t.toString();
+          if (t != null ) {
+          	str =  str + ", " + t.toString();
+          }
         }
         if ( str != "" ) {
           str = str.substring(2);
@@ -110,6 +112,7 @@ public class TypeClass {
   public void mergeTypeClass( TypeClass guestType ) {
     if ( mTrait != guestType.getTypeTrait() ) {
       mTrait = mergeTrait( mTrait, guestType.getTypeTrait() );
+      guestType.setTypeTrait(mTrait);  // type traits should be the same
     }
     
     // unify undetermined variables to the earlier variable

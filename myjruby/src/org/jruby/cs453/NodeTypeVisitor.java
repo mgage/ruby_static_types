@@ -1,6 +1,7 @@
 package org.jruby.cs453;
 
 
+
 import org.jruby.ast.visitor.NodeVisitor;
 
 import org.jruby.ast.Node;
@@ -117,7 +118,7 @@ import java.util.ArrayList;
 
 public class NodeTypeVisitor implements NodeVisitor {
 
-
+   static int visitcount = 0;
     // constructor
     public NodeTypeVisitor() {
       mNodeTypeTable       = new NodeTypeTable();
@@ -130,6 +131,18 @@ public class NodeTypeVisitor implements NodeVisitor {
       //mMethodTypeSpecTable = new HashMap<String, TypeClass>();
       //mPendingNodeList     = new ArrayList<Node>();
     }
+
+	public void  popVarTypeTable() {
+	    IVarTypeTable currentVarTable = mVarTypeTable;
+	    mVarTypeTable = currentVarTable.getParent();
+	    mNodeTypeTable.setVarTypeTable(mVarTypeTable);
+	}
+	public void  pushVarTypeTable() {
+	    IVarTypeTable parentTable = mVarTypeTable;
+	    mVarTypeTable             = new VarTypeTable();
+	    mVarTypeTable.setParent(parentTable);
+	    mNodeTypeTable.setVarTypeTable(mVarTypeTable);
+	}
 
 /*
     public ArrayList<Node> getPendingList() {
@@ -192,17 +205,27 @@ public class NodeTypeVisitor implements NodeVisitor {
          new TypeClass(TypeTrait.BOOL) );
     }
     
-    public void printVarTypeTable(PrintStream out) {
-      for (String s : mVarTypeTable.keySet()) {
-        if ( mVarTypeTable.get(s) != null ) {
-        	out.println(s + " : " + mVarTypeTable.get(s).toString());
+
+    private void printMyVarTypeTable(PrintStream out, IVarTypeTable tbl) {
+      for (String s : tbl.keySet()) {
+        if ( tbl.get(s) != null ) {
+        	out.println(s + " : " + tbl.get(s).toString());
         } else {
         	out.println(s + " : undefined");
         }
       }
-      for (String s : mBaseSymbolTable.keySet()) {
-        out.println(s + " : " + mBaseSymbolTable.get(s).toString());
+      if ( tbl.getParent() != null ) {
+         System.out.println("Printing parent table " +tbl.getParent() );
+         printMyVarTypeTable(out, tbl.getParent());
       }
+      
+//       for (String s : mBaseSymbolTable.keySet()) {
+//         out.println(s + " : " + mBaseSymbolTable.get(s).toString());
+//       }
+    }
+    
+    public void printVarTypeTable(PrintStream out) {
+    	printMyVarTypeTable(out, mVarTypeTable);
     }
     public INodeTypeTable getNodeTypeTable() {
     	return mNodeTypeTable; 
@@ -255,13 +278,27 @@ public class NodeTypeVisitor implements NodeVisitor {
 
         /* TODO bind argName to a new type variable */
         TypeClass newArgType = new TypeClass();
-        mVarTypeTable.put(argName, newArgType);
-
-        argTypeList.add(mVarTypeTable.get(((ArgumentNode)arg).getName()));
+		if ( !mVarTypeTable.containsKey(argName) ) {   
+			// FIXME -- should we be creating a new type class here?
+			// I think not -- this slaves the node type to the symbol type 
+			// updating one automatically updates the other -- this is appropriate for assignment 
+			System.out.println( "argsNode set " + argName  + " to " + newArgType + "visit time " + visitcount++);  
+			mVarTypeTable.put(argName, newArgType);
+			mNodeTypeTable.put(arg, newArgType );
+		} else {
+			TypeClass argType = mVarTypeTable.get(argName );
+			argType.mergeTypeClass(newArgType);
+			mVarTypeTable.put(argName, argType );
+			System.out.println("argsNode update " + argName + " to " +mVarTypeTable.get(argName) + " visit time " +visitcount++ );
+		}
+        
+        
+        //mVarTypeTable.put(argName, newArgType);
+        argTypeList.add(mVarTypeTable.get(argName) );
       }
       TypeClass methodType = new TypeClass(TypeTrait.FUNC);
       methodType.setFuncType(argTypeList);
-      methodType.setFuncType(new TypeClass());
+      //methodType.setFuncType(new TypeClass());
       mNodeTypeTable.put(node, methodType);
       return node.getNodeType().toString();
     }
@@ -312,15 +349,13 @@ public class NodeTypeVisitor implements NodeVisitor {
     public String visitBlockNode(BlockNode node) {
       List<Node> stmts = node.childNodes();
       int stmtNum = stmts.size();
-      if(stmtNum==0) 
+      if (stmtNum==0) {
         mNodeTypeTable.put(node, new TypeClass(TypeTrait.NIL));
-      Node lastStmt = stmts.get(stmtNum-1);
-      //if ( pending(lastStmt) ) {
-      //  defer(node);
-      //}
-      //else {
+      } else {
+        Node lastStmt = stmts.get(stmtNum-1);
         mNodeTypeTable.put(node, mNodeTypeTable.get(lastStmt));
-      //}
+        //System.out.println(" BlockNode  update " + node + " to node " +lastStmt + " type " + mNodeTypeTable.get(lastStmt) + " visit time " + visitcount++ );
+      }
       return node.getNodeType().toString();
     }
 
@@ -372,11 +407,11 @@ public class NodeTypeVisitor implements NodeVisitor {
         || node.getName() == ">"
         ) {
         
-        //System.out.println( "symbol" + node.getName() + " : " + mVarTypeTable.get(node.getName() ) );
+        System.out.println( "callNode symbol" + node.getName() + " : " + mVarTypeTable.get(node.getName() ) + " visit time " +visitcount++ );
         // get argument nodes
         //FIXME -- why won't getArgsNode work???
         List<Node> argNodes = node.childNodes();
-        Node first = argNodes.get(0);  
+        Node first  =  argNodes.get(0);  
         Node second =  argNodes.get(1) .childNodes() .get(0);       
         mNodeTypeTable.update_binary_node(node,first, second);     
         return node.getNodeType().toString();
@@ -463,6 +498,30 @@ public class NodeTypeVisitor implements NodeVisitor {
      * dynamically assign a variable
      */
     public String visitDAsgnNode(DAsgnNode node) {
+         	   Node rhs_node = node.childNodes().get(0);
+      	
+		// call update node
+			// get data from "type" of operation (receiver node)
+			   // not applicable
+			// get types of argument nodes
+			   TypeClass  ty_rhs = mNodeTypeTable.get(rhs_node); //type of RHS
+
+			// update node table -- check compatibility of actual type 
+			// with signature and unify types
+			// update var table from node table
+ 
+			  if ( !mVarTypeTable.containsKey(node.getName()) ) {   
+				// FIXME -- should we be creating a new type class here?
+				// I think not -- this slaves the node type to the symbol type 
+				// updating one automatically updates the other -- this is appropriate for assignment     
+				mVarTypeTable.put(node.getName(), ty_rhs);
+				mNodeTypeTable.put(node, ty_rhs );
+			  } else {
+				TypeClass lhsType = mVarTypeTable.get(node.getName() );
+				lhsType.mergeTypeClass(ty_rhs);
+			  }
+      //System.out.println("DAsgnNode");
+      //System.out.println("LHS: " + mVarTypeTable.get(node.getName()) + "  RHS: " + ty_rhs);       
       return node.getNodeType().toString();
     }
 
@@ -555,13 +614,21 @@ public class NodeTypeVisitor implements NodeVisitor {
      */
     public String visitFCallNode(FCallNode node) {
       String funcName = node.getName();
-      System.out.println( "func name" + funcName );
-      Node argsNode = node.getArgsNode();
+      // System.out.println( "func name " + funcName + " visit time " +visitcount++ );
+      //Node argsNode = node.getArgsNode();
+      List<Node> children = node.childNodes();
+      Node iterNode =children.get(0);
+      List<Node> children2 = iterNode.childNodes();
+      Node argsNode = children2.get(0);
+      // System.out.println( "args node: " + argsNode  );
+      
       ArrayList<TypeClass> argTypeList = new ArrayList<TypeClass>();
       if(argsNode!=null) {
-        List<Node> args = argsNode.childNodes();
+        List<Node> children3 = argsNode.childNodes();
+        Node arrayNode = children3.get(0);
+        List<Node> args = arrayNode.childNodes();
         for( Node n : args ) {
-          System.out.println("arg is " +n );
+          //System.out.println("arg is " +n );
           TypeClass argType = mNodeTypeTable.get(n);
           argTypeList.add(argType);
         }
@@ -585,7 +652,7 @@ public class NodeTypeVisitor implements NodeVisitor {
       //else {
       //  mVarTypeTable.put(funcName, methodType);
       //}
-       
+      mNodeTypeTable.put(node, mNodeTypeTable.get(iterNode) );
       return node.getNodeType().toString();
     }
 
@@ -674,10 +741,10 @@ public class NodeTypeVisitor implements NodeVisitor {
       List<Node> children = node.childNodes();
       ArgsNode args = (ArgsNode)children.get(0);
       Node body = children.get(1);
-      System.out.println(" body " + body );
+      // System.out.println(" body " + body );
       ArrayList<TypeClass> argTypeList = mNodeTypeTable.get(args).getArgType();
-      //TypeClass retType  = mNodeTypeTable.get(body);
-      TypeClass retType = new TypeClass();
+      TypeClass retType  = mNodeTypeTable.get(body);
+      //TypeClass retType = new TypeClass();
       TypeClass funcType = new TypeClass(TypeTrait.FUNC);
       funcType.setFuncType( argTypeList, retType );
       mNodeTypeTable.put(node, funcType);
@@ -698,7 +765,6 @@ public class NodeTypeVisitor implements NodeVisitor {
      */
     public String visitLocalAsgnNode(LocalAsgnNode node) {
       	// get argument nodes
-      	   //List<Node> children = ;
       	   Node rhs_node = node.childNodes().get(0);
       	
 		// call update node
@@ -720,9 +786,12 @@ public class NodeTypeVisitor implements NodeVisitor {
 			  } else {
 				TypeClass lhsType = mVarTypeTable.get(node.getName() );
 				lhsType.mergeTypeClass(ty_rhs);
+				ty_rhs = mNodeTypeTable.get(rhs_node); // type of rhs might have changed
+				mNodeTypeTable.put(node, ty_rhs );
+
 			  }
-      //System.out.println("LocalAsgnNode");
-      //System.out.println("LHS: " + mVarTypeTable.get(node.getName()) + "  RHS: " + ty_rhs);    
+      System.out.println("LocalAsgnNode");
+      System.out.println("LHS: " + mVarTypeTable.get(node.getName()) + "  RHS: " + ty_rhs);    
       return node.getNodeType().toString();
     }
 
@@ -783,15 +852,9 @@ public class NodeTypeVisitor implements NodeVisitor {
      */
     public String visitNewlineNode(NewlineNode node) {
       Node child = node.childNodes().get(0);
-    
-      //if ( pending(child) ) {
-      //  defer(node);
-      //}
-      //else {
-        mNodeTypeTable.put(node, mNodeTypeTable.get(child));
-      //} 
+      mNodeTypeTable.put(node, mNodeTypeTable.get(child)); 
         
-      return node.getNodeType().toString();
+      return node.getNodeType().toString() ;
     }
 
     public String visitNextNode(NextNode iVisited) {

@@ -8,7 +8,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 import java.util.HashMap;
+import org.jruby.ast.NodeType;
+import org.jruby.ast.types.INameNode;
 
+ 
 public class TypeInference {
   
   public TypeInference(Node root, Ruby runtime) {
@@ -27,8 +30,17 @@ public class TypeInference {
 
 
   private void traverseTree(Node node) {
+    if (node.getNodeType() == NodeType.FCALLNODE ) {
+    	System.out.println(" entering FCALLNODE ");
+    	mTypeVisitor.pushVarTypeTable();
+    }
     for(Node child : node.childNodes()) {
       traverseTree(child);
+    }
+    if (node.getNodeType() == NodeType.FCALLNODE ) {
+    	mTypeVisitor.printVarTypeTable(mRuntime.getOutputStream());
+    	mTypeVisitor.popVarTypeTable();
+    	System.out.println(" leaving FCALLNODE ");
     }
     inferNodeType(node);
   }

@@ -75,11 +75,15 @@ public class NodeTypeTable implements INodeTypeTable{
         
         mNodeTypeTable.put(rcvrNode, ty_rcvr);
         
-        if (firstArg.getNodeType() == NodeType.LOCALVARNODE) { // FIXME other nodes may be involved
+        if (firstArg.getNodeType() == NodeType.LOCALVARNODE
+            ||firstArg.getNodeType() == NodeType.DVARNODE) { // FIXME other nodes may be involved
         	mVarTypeTable.put( ( (INameNode)firstArg).getName(), ty_left);
+        	mNodeTypeTable.put( firstArg, ty_left);
         }
-        if (secondArg.getNodeType() == NodeType.LOCALVARNODE) {
+        if (secondArg.getNodeType() == NodeType.LOCALVARNODE
+            ||secondArg.getNodeType() == NodeType.DVARNODE) {
         	mVarTypeTable.put( ( (INameNode)secondArg).getName(), ty_right); 
+        	mNodeTypeTable.put( secondArg, ty_left);
         } 
           	
 	
