@@ -465,9 +465,14 @@ public class NodeTypeVisitor implements NodeVisitor {
         TypeClass methodType = new TypeClass(TypeTrait.FUNC);
         methodType.setFuncType(argTypeList, methodRetType);
 
-        TypeClass procEntityType = mNodeTypeTable.get(recvNode);
-        //procEntityType.mergeTypeClass(methodType);  //FIXME
-        //mNodeTypeTable.put(node, procEntityType.getRetType());
+        TypeClass procEntityType = mNodeTypeTable.get(recvNode).getCopy();
+        System.out.println(" var node " + recvNode + " type " + procEntityType);
+        System.out.println(" new type " + methodType);
+        methodType.mergeTypeClass(procEntityType);  //FIXME
+        System.out.println(" var node " + recvNode + " type " + procEntityType);
+        System.out.println(" new type " + methodType);
+        mNodeTypeTable.put(recvNode, methodType);
+        mNodeTypeTable.put(node, methodType.getRetType());
         return node.getNodeType().toString();
       }
       //INameNode recv = (INameNode)node.getReceiverNode();

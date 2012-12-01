@@ -25,7 +25,29 @@ public class TypeClass {
   public TypeTrait getTypeTrait() { return mTrait; }
 
   public void setTypeTrait(TypeTrait trait) { mTrait = trait; }
-
+  
+  private TypeClass myCopy() {
+  	TypeClass ret = new TypeClass();
+  	ret.mTrait    = this.mTrait;
+  	ret.mRetType  = this.mRetType;
+  	ret.mTypeVarIndex = this.mTypeVarIndex;
+    return ret;
+  }
+   public TypeClass getCopy() {
+   	TypeClass ret = this.myCopy();
+   	//copy over args without getting lost in recursion
+   	ArrayList<TypeClass> args = new ArrayList(10);
+  	if(mArgTypes!=null) {
+        for ( TypeClass t : mArgTypes ) {
+          args.add(t.myCopy()  ); //FIXME
+        }
+      }
+      else {
+        ret.mArgTypes = mArgTypes;
+      }
+      ret.setFuncType( args);
+      return ret;
+    }
   /*
    * Constructor
    */
@@ -124,17 +146,17 @@ public class TypeClass {
         mTypeVarIndex = guestType.getTypeVarIndex();
       }
     }
-    // handle compound types
+     // handle compound types
     if ( mTrait == TypeTrait.FUNC && 
       guestType.getTypeTrait() == TypeTrait.FUNC ) {
       TypeClass ret = guestType.getRetType();
       if(mRetType==null) {
         mRetType = ret;
-        mTypeVarIndex = guestType.getTypeVarIndex();
-        
-      }
-      else {
+        mTypeVarIndex = guestType.getTypeVarIndex();        
+      } else {
+        TypeTrait save_trait = ret.getTypeTrait();
         mRetType.mergeTypeClass(ret);
+        ret.setTypeTrait(save_trait);
       }
       /* FIXME assume that the two to-be-merged methods have same number 
        * of args
@@ -142,7 +164,10 @@ public class TypeClass {
       if(mArgTypes!=null) {
         int n = 0;
         for ( TypeClass t : mArgTypes ) {
-          t.mergeTypeClass(guestType.getArgType().get(n));
+          TypeClass guest = guestType.getArgType().get(n);
+          TypeTrait save_trait = guest.getTypeTrait();
+          t.mergeTypeClass(guest);
+          guest.setTypeTrait(save_trait);
           n = n + 1;
         }
       }
